@@ -76,6 +76,9 @@
 ├── index.html          # 메인 HTML 파일
 ├── styles.css          # CSS 스타일시트
 ├── script.js           # JavaScript 기능
+├── config.js           # API 키 및 설정 (Git 제외)
+├── config.example.js   # 설정 예시 파일
+├── .gitignore          # Git 제외 파일 목록
 └── README.md           # 프로젝트 설명서
 ```
 
@@ -135,7 +138,7 @@ VIDEO: {
     TYPE: 'youtube', // 'youtube' 또는 'local'
     YOUTUBE_SHORTS_ID: 'xZUaA5mmRl0', // YouTube Shorts ID
     AUTOPLAY: true,
-    MUTE: true,
+    MUTE: false, // 소리 활성화
     LOOP: true
 }
 ```
