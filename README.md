@@ -1,183 +1,293 @@
-# 나그네 - GPS 기반 맛집 숏폼 플랫폼 MVP
+# 나그네 - 맛집 숏폼 플랫폼
 
-모바일 환경에 최적화된 **실시간 GPS 근거리 기반 맛집 숏폼 플랫폼**의 최소 동작 가능한 MVP입니다.
+확장 가능한 MVP 아키텍처로 설계된 **GPS 기반 맛집 숏폼 플랫폼**입니다. Phase 1에서는 추천 알고리즘 기반의 피드를, Phase 2에서는 GPS 기반 위치 서비스를 제공합니다.
+
+## 🏗️ 아키텍처 개요
+
+### Phase 1: 추천 기반 MVP (현재)
+- **목적**: 빠른 출시를 위한 "맛집 추천 피드" (Instagram Reels 스타일)
+- **핵심 기능**: OAuth 인증, 사용자 프로필, 추천 피드, 소셜 액션, 관리자 대시보드
+
+### Phase 2: GPS 기반 확장 (향후)
+- **목적**: MVP 성공 후 위치 인식 기능 추가
+- **핵심 기능**: GPS 기반 맛집 검색, 하이브리드 피드, 지도 통합, 고급 필터
 
 ## 🚀 주요 기능
 
-### 1. 로딩 화면
-- 아름다운 그라데이션 배경
-- 로딩 스피너 애니메이션
-- 3초 후 자동으로 메인 화면 전환
+### Phase 1 기능
+- ✅ **OAuth2.0 인증**: Google, Apple, Kakao 로그인
+- ✅ **사용자 프로필**: 선호도 데이터 저장 및 관리
+- ✅ **추천 피드**: 콘텐츠 기반 필터링 알고리즘
+- ✅ **소셜 액션**: 좋아요, 저장, 댓글, 공유
+- ✅ **관리자 대시보드**: 맛집 등록 및 미디어 관리
+- ✅ **모바일 최적화**: 터치 제스처, 반응형 디자인
 
-### 2. GPS 기반 맛집 추천
-- **실시간 위치 확인**: HTML5 Geolocation API 사용
-- **근거리 맛집 검색**: Google Places API로 실제 주변 맛집 검색
-- **정확한 거리 계산**: Haversine 공식으로 미터 단위 거리 측정
-- **GPS 권한 관리**: 사용자 위치 접근 권한 요청 및 관리
-- **실시간 지도**: Google Maps JavaScript API로 인터랙티브 지도 표시
-
-### 3. 맛집 숏폼 영상
-- **YouTube Shorts 지원**: 설정으로 YouTube Shorts 또는 로컬 비디오 선택
-- 맛집별 맞춤 숏폼 영상 재생
-- 자동 재생 및 루프 재생
-- 재생/일시정지 컨트롤 (로컬 비디오)
-- 맛집 정보 및 거리 오버레이
-
-### 4. 맛집 서비스 기능
-- **예약하기**: 맛집 방문 예약 (이름, 전화번호, 날짜, 시간, 인원)
-- **찾아가기**: Google Maps Directions API로 실시간 경로 안내
-- **교통수단별 소요시간**: 도보, 자동차, 대중교통별 정확한 소요시간 계산
-- **맛집 상세정보**: Google Places API 기반 실시간 평점, 가격대, 주소 등
-- **인터랙티브 지도**: 맛집 마커, 정보창, 경로 표시 등
-
-### 5. 모바일 최적화
-- 터치 제스처 지원 (스와이프로 화면 전환)
-- 반응형 디자인
-- 모바일 친화적 UI/UX
+### Phase 2 기능 (계획)
+- 🔄 **GPS 기반 검색**: 근처 맛집 실시간 검색
+- 🔄 **하이브리드 피드**: 추천 + 근처 인기 맛집
+- 🔄 **지도 통합**: Google Maps / Kakao Maps API
+- 🔄 **고급 필터**: 거리, 평점, 음식 종류별 필터링
 
 ## 🛠️ 기술 스택
 
-- **HTML5**: 시맨틱 마크업, Geolocation API
-- **CSS3**: 모던 CSS, 애니메이션, 반응형 디자인
-- **JavaScript**: ES6+, GPS 위치 서비스, 거리 계산 알고리즘
-- **GPS 기술**: HTML5 Geolocation, Haversine 거리 계산 공식
-- **Google Maps API**: Maps JavaScript API, Places API, Directions API, Geocoding API
-- **폰트**: Noto Sans KR (한글 최적화)
+### Backend
+- **Spring Boot 3.2.0**: REST API, JPA/Hibernate
+- **PostgreSQL + PostGIS**: 확장 가능한 데이터베이스
+- **Supabase**: 데이터베이스 및 스토리지
+- **Redis**: 캐싱 및 세션 관리
+- **JWT + OAuth2**: 인증 및 권한 관리
+
+### Frontend
+- **Next.js 14**: React 프레임워크
+- **TypeScript**: 타입 안전성
+- **TailwindCSS**: 유틸리티 우선 CSS
+- **Framer Motion**: 애니메이션
+- **React Query**: 서버 상태 관리
+
+### Infrastructure
+- **Docker**: 컨테이너화
+- **Nginx**: 리버스 프록시 및 로드 밸런싱
+- **PostgreSQL**: 메인 데이터베이스
+- **Redis**: 캐싱 레이어
+
+## 📁 프로젝트 구조
+
+```
+나그네 프로젝트/
+├── backend/                    # Spring Boot 백엔드
+│   ├── src/main/java/com/nagune/restaurantplatform/
+│   │   ├── entity/            # JPA 엔티티
+│   │   ├── repository/        # 데이터 접근 계층
+│   │   ├── service/           # 비즈니스 로직
+│   │   ├── controller/        # REST API 컨트롤러
+│   │   ├── config/            # 설정 클래스
+│   │   ├── dto/               # 데이터 전송 객체
+│   │   ├── security/          # 보안 설정
+│   │   └── exception/         # 예외 처리
+│   ├── src/main/resources/
+│   │   └── application.yml    # 애플리케이션 설정
+│   └── Dockerfile
+├── frontend/                   # Next.js 프론트엔드
+│   ├── src/
+│   │   ├── app/               # App Router 페이지
+│   │   ├── components/        # React 컴포넌트
+│   │   ├── hooks/             # 커스텀 훅
+│   │   ├── lib/               # 유틸리티 및 설정
+│   │   ├── types/             # TypeScript 타입
+│   │   └── utils/             # 헬퍼 함수
+│   ├── public/                # 정적 파일
+│   └── Dockerfile
+├── nginx/                      # Nginx 설정
+│   └── nginx.conf
+├── docs/                       # 문서
+├── docker-compose.yml          # Docker Compose 설정
+└── README.md
+```
+
+## 🚀 빠른 시작
+
+### 1. 환경 설정
+
+```bash
+# 저장소 클론
+git clone <repository-url>
+cd nagune-restaurant-platform
+
+# 환경 변수 설정
+cp frontend/env.example frontend/.env.local
+cp backend/src/main/resources/application.yml.example backend/src/main/resources/application.yml
+```
+
+### 2. Supabase 설정
+
+1. [Supabase](https://supabase.com)에서 새 프로젝트 생성
+2. 데이터베이스 URL 및 API 키 복사
+3. 환경 변수에 설정:
+
+```env
+# frontend/.env.local
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# backend/src/main/resources/application.yml
+supabase:
+  url: your_supabase_url
+  anon-key: your_supabase_anon_key
+  service-role-key: your_supabase_service_role_key
+```
+
+### 3. OAuth 설정
+
+각 OAuth 제공자에서 클라이언트 ID와 시크릿을 발급받아 환경 변수에 설정:
+
+```env
+# Google OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# Kakao OAuth
+KAKAO_CLIENT_ID=your_kakao_client_id
+KAKAO_CLIENT_SECRET=your_kakao_client_secret
+
+# Apple OAuth
+APPLE_CLIENT_ID=your_apple_client_id
+APPLE_CLIENT_SECRET=your_apple_client_secret
+```
+
+### 4. Docker로 실행
+
+```bash
+# 전체 스택 실행
+docker-compose up -d
+
+# 로그 확인
+docker-compose logs -f
+
+# 서비스 중지
+docker-compose down
+```
+
+### 5. 개발 모드로 실행
+
+```bash
+# Backend 실행
+cd backend
+./mvnw spring-boot:run
+
+# Frontend 실행
+cd frontend
+npm install
+npm run dev
+```
 
 ## 📱 사용법
 
 ### 기본 조작
-- **재생/일시정지**: 화면 상단의 재생/일시정지 버튼
-- **예약하기**: 하단 "예약하기" 버튼 클릭
-- **찾아가기**: 하단 "찾아가기" 버튼 클릭
-- **뒤로가기**: "← 뒤로" 버튼 클릭
-
-### 터치 제스처 (모바일)
-- **왼쪽 스와이프**: 예약하기 화면으로 이동
-- **오른쪽 스와이프**: 찾아가기 화면으로 이동
+- **스와이프 업/다운**: 피드 탐색
+- **스와이프 좌/우**: 맛집 상세 정보 / 지도
+- **탭**: 재생/일시정지, 좋아요, 댓글 등
 
 ### 키보드 단축키
 - **스페이스바**: 재생/일시정지
-- **←**: 예약하기 화면으로 이동
-- **→**: 찾아가기 화면으로 이동
-- **ESC**: 메인 화면으로 돌아가기
+- **↑/↓**: 피드 탐색
+- **←/→**: 맛집 정보 / 지도
 
-## 🎨 디자인 특징
+## 🔧 개발 가이드
 
-- **그라데이션 배경**: 모던하고 세련된 색상 조합
-- **글래스모피즘**: 반투명 효과와 블러 처리
-- **부드러운 애니메이션**: CSS 트랜지션과 키프레임
-- **직관적 UI**: 사용자 친화적인 버튼과 폼
+### 엔티티 설계 원칙
+- **UUID 기본키**: 확장성 및 보안
+- **타임스탬프**: 생성/수정 시간 추적
+- **소프트 삭제**: 데이터 보존
+- **Phase 2 확장**: GPS 필드 미리 준비
 
-## 📁 파일 구조
+### API 설계 원칙
+- **RESTful**: 표준 HTTP 메서드 사용
+- **페이지네이션**: 대용량 데이터 처리
+- **에러 핸들링**: 일관된 에러 응답
+- **인증**: JWT 토큰 기반
 
-```
-나그네 프로젝트/
-├── index.html          # 메인 HTML 파일
-├── styles.css          # CSS 스타일시트
-├── script.js           # JavaScript 기능
-├── config.js           # API 키 및 설정 (Git 제외)
-├── config.example.js   # 설정 예시 파일
-├── .gitignore          # Git 제외 파일 목록
-└── README.md           # 프로젝트 설명서
-```
+### 프론트엔드 설계 원칙
+- **모바일 우선**: 터치 친화적 UI
+- **성능 최적화**: 코드 스플리팅, 지연 로딩
+- **접근성**: 키보드 네비게이션, 스크린 리더
+- **반응형**: 다양한 화면 크기 지원
 
-## 🚀 실행 방법
+## 🧪 테스트
 
-1. 모든 파일을 같은 디렉토리에 저장
-2. **API 키 설정**:
-   - `config.example.js`를 `config.js`로 복사
-   - `config.js`에서 `YOUR_ACTUAL_API_KEY_HERE`를 실제 Google Maps API 키로 교체
-3. `index.html` 파일을 웹 브라우저에서 열기
-4. 모바일 환경에서 테스트하려면 개발자 도구의 모바일 뷰 사용
+```bash
+# Backend 테스트
+cd backend
+./mvnw test
 
-### 🔑 Google Maps API 키 발급 방법:
+# Frontend 테스트
+cd frontend
+npm run test
 
-1. [Google Cloud Console](https://console.cloud.google.com/)에서 프로젝트 생성
-2. 다음 API들을 활성화:
-   - Maps JavaScript API
-   - Places API
-   - Directions API
-   - Geocoding API
-3. 사용자 인증 정보에서 API 키 생성
-4. API 키 제한 설정 (도메인, IP 등)
-5. `config.js`에 API 키 입력
-
-### 📍 GPS 기능 제어:
-
-GPS 기능을 켜고 끌 수 있습니다:
-
-```javascript
-// config.js
-GPS: {
-    ENABLED: false, // false: GPS 끄기, true: GPS 켜기
-    SHOW_PERMISSION_POPUP: false, // false: 권한 요청 팝업 숨김, true: 팝업 표시
-    // ... 기타 설정
-}
+# E2E 테스트
+npm run test:e2e
 ```
 
-- **GPS 끄기**: `ENABLED: false` - 샘플 데이터로 작동
-- **GPS 켜기**: `ENABLED: true` - 실제 GPS 위치 기반 작동
-- **권한 팝업 숨김**: `SHOW_PERMISSION_POPUP: false` - 팝업 없이 GPS 사용
-- **권한 팝업 표시**: `SHOW_PERMISSION_POPUP: true` - 권한 요청 팝업 표시
+## 📊 모니터링
 
-### 🚫 GPS 권한 팝업 닫기:
+- **Health Check**: `/health` 엔드포인트
+- **메트릭**: Spring Boot Actuator
+- **로그**: 구조화된 JSON 로그
+- **에러 추적**: Sentry 통합 (선택사항)
 
-GPS 권한 요청 팝업이 표시될 때:
-- **오른쪽 상단 X 버튼**: 팝업을 닫고 샘플 데이터로 초기화
-- **GPS 활성화 버튼**: GPS 권한 허용 및 위치 확인
-- **자동 처리**: X 버튼 클릭 시 GPS 설정에 따라 자동으로 적절한 동작 수행
+## 🚀 배포
 
-### 🎬 비디오 타입 제어:
+### 프로덕션 환경
+1. 환경 변수 설정
+2. SSL 인증서 설정
+3. 도메인 설정
+4. Docker Compose 실행
 
-YouTube Shorts 또는 로컬 비디오를 선택할 수 있습니다:
+### CI/CD 파이프라인
+- GitHub Actions 설정
+- 자동 테스트 실행
+- Docker 이미지 빌드
+- 자동 배포
 
-```javascript
-// config.js
-VIDEO: {
-    TYPE: 'youtube', // 'youtube' 또는 'local'
-    YOUTUBE_SHORTS_ID: 'xZUaA5mmRl0', // YouTube Shorts ID
-    AUTOPLAY: true,
-    MUTE: false, // 소리 활성화
-    LOOP: true
-}
-```
+## 🔒 보안
 
-- **YouTube Shorts**: `TYPE: 'youtube'` - YouTube 영상 사용
-- **로컬 비디오**: `TYPE: 'local'` - 로컬 파일 사용
+- **API 키 보호**: 환경 변수 사용
+- **CORS 설정**: 허용된 도메인만
+- **Rate Limiting**: API 호출 제한
+- **SQL Injection 방지**: JPA 사용
+- **XSS 방지**: 입력 검증 및 이스케이프
+
+## 📈 성능 최적화
+
+- **데이터베이스 인덱싱**: 자주 조회되는 필드
+- **캐싱**: Redis를 통한 응답 캐싱
+- **CDN**: 정적 파일 배포
+- **이미지 최적화**: WebP 형식 사용
+- **번들 최적화**: Tree shaking, 코드 스플리팅
 
 ## 🌟 향후 개선 방향
 
-- [x] **실시간 GPS 위치 확인** ✅
-- [x] **근거리 맛집 검색** ✅
-- [x] **정확한 거리 계산** ✅
-- [x] **Google Maps API 연동** ✅
-- [x] **실시간 맛집 검색** ✅
-- [x] **정확한 경로 안내** ✅
-- [ ] 백엔드 연동으로 예약 데이터 저장
-- [ ] 사용자 인증 시스템
-- [ ] 더 많은 맛집 숏폼 영상 지원
-- [ ] 맛집 리뷰 및 평점 시스템
-- [ ] 소셜 미디어 공유 기능
-- [ ] PWA 지원으로 앱처럼 사용
+### Phase 1 완료 목표
+- [x] 기본 아키텍처 구축
+- [x] OAuth 인증 시스템
+- [x] 추천 알고리즘 구현
+- [x] 모바일 최적화 UI
+- [ ] 관리자 대시보드
+- [ ] 시드 데이터 스크립트
 
-## 📱 브라우저 지원
+### Phase 2 확장 목표
+- [ ] GPS 기반 검색
+- [ ] 실시간 지도 통합
+- [ ] 하이브리드 추천 시스템
+- [ ] 고급 필터링
+- [ ] 오프라인 지원
 
-- Chrome (권장)
-- Safari
-- Firefox
-- Edge
-- 모바일 브라우저 (iOS Safari, Chrome Mobile)
+### 장기 목표
+- [ ] AI 기반 개인화 추천
+- [ ] 실시간 채팅
+- [ ] 소셜 기능 강화
+- [ ] PWA 지원
+- [ ] 다국어 지원
 
-## 🔧 개발자 정보
+## 🤝 기여하기
 
-이 프로젝트는 모바일 최적화된 웹사이트 MVP 개발을 위해 제작되었습니다.
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📄 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 있습니다.
+
+## 📞 지원
+
+- **이슈 리포트**: GitHub Issues
+- **문서**: 프로젝트 Wiki
+- **커뮤니티**: Discord 서버
 
 ---
 
-**참고**: 
-- 현재 비디오는 샘플 링크를 사용하고 있습니다. 실제 서비스에서는 맛집별 맞춤 숏폼 영상을 사용하시기 바랍니다.
-- GPS 기능은 HTTPS 환경에서만 작동합니다. 로컬 테스트 시에는 브라우저 설정에서 위치 정보 접근을 허용해주세요.
-- **Google Maps API 키가 필요합니다**: `config.js` 파일에서 API 키를 설정해주세요.
-- Google Maps API는 무료 할당량이 있으므로 사용량을 모니터링하시기 바랍니다.
-- **보안**: `config.js`는 `.gitignore`에 추가되어 Git에 커밋되지 않습니다.
+**개발팀**: 나그네 개발팀  
+**최종 업데이트**: 2024년 9월  
+**버전**: 1.0.0-alpha
