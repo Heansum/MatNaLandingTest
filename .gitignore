@@ -1,0 +1,49 @@
+# 환경 설정 파일 (API 키 포함)
+config.js
+
+# 환경 변수 파일
+.env
+.env.local
+.env.development
+.env.production
+
+# API 키 관련 파일
+api-keys.json
+secrets.json
+
+# 로그 파일
+*.log
+logs/
+
+# 임시 파일
+*.tmp
+*.temp
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
+
+# IDE 설정 파일
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node.js (만약 나중에 사용한다면)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 빌드 결과물
+dist/
+build/
+
+# 캐시 파일
+.cache/
+.parcel-cache/
+
+# 백업 파일
+*.bak
+*.backup
+
